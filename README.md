@@ -31,7 +31,7 @@ Full-stack task management application built using React.js and Spring Boot.
 ## Project Structure
 
 ```bash
-backend/
+backend/backend
 frontend/
 docker-compose.yml
 ```
