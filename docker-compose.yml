@@ -1,0 +1,39 @@
+services:
+
+  mysql:
+    image: mysql:8
+    container_name: mysql-container
+
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+
+    ports:
+      - "3307:3306"
+
+  backend:
+    build: ./backend/backend
+    container_name: backend-container
+
+    ports:
+      - "8080:8080"
+
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/${MYSQL_DATABASE}
+      SPRING_DATASOURCE_USERNAME: ${MYSQL_USER}
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD}
+
+    depends_on:
+      - mysql
+
+  frontend:
+    build: ./frontend
+    container_name: frontend-container
+
+    ports:
+      - "5173:5173"
+
+    depends_on:
+      - backend
